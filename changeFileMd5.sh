@@ -1,7 +1,3 @@
-
-#find . -name "*.png" -exec echo $(uuidgen) >> /Users/un/Desktop/xdymn/xdymn/Assets.xcassets{} \;
-#find . -name "*.png" -exec echo /Users/un/Desktop/xdymn/xdymn/Assets.xcassets{} \;
-
 function readfile ()
 {
 #这里`为esc下面的按键符号
@@ -15,7 +11,9 @@ readfile $1"/"$file
 else
 #否则就能够读取该文件的地址
 
-if [[ "${file##*.}" = "png" ]]
+suffix="${file##*.}"
+if [[ $suffix = "png" ]] ||
+   [[ $suffix = "jpg" ]]
 then
 echo $(uuidgen) >> $1"/"$file
 #echo $1"/"$file
@@ -25,5 +23,10 @@ fi
 done
 }
 
-folder="/Users/un/Desktop/xdymn/xdymn/Assets.xcassets"
-readfile $folder
+if [[  $# > 0 ]]
+then
+    folder=$1
+    readfile $folder
+else
+    echo "Please input your folder after $0"
+fi
